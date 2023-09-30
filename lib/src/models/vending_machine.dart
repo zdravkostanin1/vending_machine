@@ -1,21 +1,17 @@
 import 'dart:math';
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:vending_machine_task/src/models/product.dart';
 
-// TODO: for testing
-double totalCoins = 0.0;
+/// to store our coinDenominations
+List<double> coinDenominations = [2, 1, 0.5, 0.2, 0.1];
 
-// TODO: for testing
-List<double> changeOptions = [0.10, 0.20, 0.50, 1, 2];
-
-// TODO: for testing
-List<double> minimumCoins = [0.5, 0.10, 0.20];
-
-// TODO: for testing
-List<double> returnedCoins = [];
+/// to store the used coins for returning a change
+List<double> usedCoins = [];
 
 class VendingMachine {
+  /// counts the total coins inserted into machine
+  double totalCoins = 0.0;
+
   /// used to store our products
   final List<Product> products = [];
 
@@ -45,6 +41,24 @@ class VendingMachine {
     }
   }
 
+  /// insert coins into the vending machine using this method
+  void insertCoin(double coin) => totalCoins += coin;
+
+  /// to edit a product's price
+  void editProductPrice(int index, double newPrice) => products[index].price = newPrice;
+
+  /// to edit a product's title
+  void editProductTitle(int index, String newTitle) => products[index].title = newTitle;
+
+  // TODO: Implement CRUD - Read operation
+  void getProductData(Product product) {
+    print(product.title);
+    print(product.price);
+  }
+
+  /// this method is used to delete a product from the vending machine
+  void deleteProduct(int index) => products.removeAt(index);
+
   // TODO: Implement
   /// method accepts the name of the product that has been clicked & price
   void calculateChange(String product, double price, double coinsInserted) {
@@ -54,18 +68,16 @@ class VendingMachine {
       }
 
       /// coins are more than products price --> return change
-      else if (coinsInserted >= price) {
+      else if (coinsInserted > price) {
+        /// calculate the change
         change = coinsInserted - price;
-        double i = (change / 2);
-        // print(i.toStringAsFixed(2));
-        // double howMuchMultipliedIForChange;
-        /// returns 0.10 until equal to change
-        for (double s = 0.0; s <= change; s += i) {
-          if (s != 0.0) {
-            print(s.toStringAsFixed(2));
+        for (double coin in coinDenominations) {
+          if (change > coin) {
+            print(coin);
+          } else {
+            continue;
           }
         }
-        // print((change / 3).toStringAsFixed(2));
       }
 
       /// not enough COINS inserted
@@ -77,60 +89,4 @@ class VendingMachine {
     }
   }
 
-  // TODO: Test
-  void insertCoin(double coin) {
-    totalCoins += coin;
-    print(totalCoins.toStringAsFixed(2));
-  }
-
-  // static int minCoins(List<int> coins, int m, int V) {
-  //   // Base case
-  //   if (V == 0) return 0;
-  //
-  //   // Initialize result
-  //   int res = 2147483647; // Equivalent to int.MaxValue in C#
-  //
-  //   // Try every coin that has
-  //   // smaller value than V
-  //   for (int i = 0; i < m; i++) {
-  //     if (coins[i] <= V) {
-  //       int subRes = minCoins(coins, m, V - coins[i]);
-  //
-  //       // Check for 2147483647 (INT_MAX in C#) to
-  //       // avoid overflow and see if the result can be minimized
-  //       if (subRes != 2147483647 && subRes + 1 < res) {
-  //         res = subRes + 1;
-  //       }
-  //     }
-  //   }
-  //   return res;
-  // }
-
-  void returnCoin(double coinsInputted, double priceOfProduct) {
-    double c = (coinsInputted - priceOfProduct);
-    double coinsUsed = 0;
-    double totalChange = 0.0;
-
-    while (totalChange <= c) {
-      for (double i in changeOptions) {
-        if (totalChange + i > c) {
-          // break;
-          // print(totalChange);
-        } else {
-          coinsUsed++;
-          totalChange += i;
-          returnedCoins.add(i);
-        }
-        if (totalChange == c) {
-          break;
-        }
-        // break;
-      }
-      if (totalChange == c) {
-        break;
-      }
-    }
-    print(totalChange);
-    print("COINS USED $coinsUsed");
-  }
 }
