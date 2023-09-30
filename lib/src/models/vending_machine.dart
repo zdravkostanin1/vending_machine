@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:decimal/decimal.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:vending_machine_task/src/models/product.dart';
 
@@ -7,6 +8,8 @@ List<double> coinDenominations = [2, 1, 0.5, 0.2, 0.1];
 
 /// to store the used coins for returning a change
 List<double> usedCoins = [];
+
+Map<double, int> changeCoins = {};
 
 class VendingMachine {
   /// counts the total coins inserted into machine
@@ -45,10 +48,12 @@ class VendingMachine {
   void insertCoin(double coin) => totalCoins += coin;
 
   /// to edit a product's price
-  void editProductPrice(int index, double newPrice) => products[index].price = newPrice;
+  void editProductPrice(int index, double newPrice) =>
+      products[index].price = newPrice;
 
   /// to edit a product's title
-  void editProductTitle(int index, String newTitle) => products[index].title = newTitle;
+  void editProductTitle(int index, String newTitle) =>
+      products[index].title = newTitle;
 
   // TODO: Implement CRUD - Read operation
   void getProductData(Product product) {
@@ -75,14 +80,15 @@ class VendingMachine {
         for (double coin in coinDenominations) {
           if (change >= coin) {
             int count = (change / coin).floor();
-            if (count > 0) {
-              usedCoins.add(coin);
-              change -= coin * count;
-              // print(coin);
-            }
+            changeCoins[coin] = count;
+            // changeCoins['count']?.add(count);
+            // changeCoins['denomination']?.add(coin);
+            // print(change - coin * count);
+            change -= coin * count;
+            // print(coin);
           }
         }
-        print(usedCoins);
+        print(changeCoins);
       }
 
       /// not enough COINS inserted
@@ -93,5 +99,4 @@ class VendingMachine {
       print("NO COINS");
     }
   }
-
 }
