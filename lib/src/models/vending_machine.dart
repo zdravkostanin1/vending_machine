@@ -71,13 +71,18 @@ class VendingMachine {
       else if (coinsInserted > price) {
         /// calculate the change
         change = coinsInserted - price;
+        // usedCoins
         for (double coin in coinDenominations) {
-          if (change > coin) {
-            print(coin);
-          } else {
-            continue;
+          if (change >= coin) {
+            int count = (change / coin).floor();
+            if (count > 0) {
+              usedCoins.add(coin);
+              change -= coin * count;
+              // print(coin);
+            }
           }
         }
+        print(usedCoins);
       }
 
       /// not enough COINS inserted
