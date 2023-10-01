@@ -44,6 +44,9 @@ class VendingMachine {
     }
   }
 
+  /// used for adding a new product to vendingMachine
+  void addNewProduct(Product product) => products.add(product);
+
   /// insert coins into the vending machine using this method
   void insertCoin(double coin) => totalCoins += coin;
 

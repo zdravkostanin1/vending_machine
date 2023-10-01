@@ -62,6 +62,151 @@ class _PageState extends State<Page> {
     });
   }
 
+  /// Widget to display a dialog for adding a new product to the vending machine
+  Future<void> _addNewProductDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+            'ADD A NEW PRODUCT',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                TextField(
+                  textAlign: TextAlign.start,
+                  decoration: const InputDecoration(
+                    labelText: 'Title',
+                    labelStyle: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
+                    ),
+                    border: OutlineInputBorder(),
+                    // helperText: 'New product name',
+                    hintStyle: TextStyle(
+                        fontWeight: FontWeight.w400, color: Colors.black,
+                    ),
+                  ),
+                  onChanged: (String title) {
+                    /// save the new product title
+                    newProductTitle = title;
+                  },
+                ),
+                const SizedBox(
+                  height: 10.0,
+                ),
+                const Text(
+                  'SELECT A PRICE: ',
+                  style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: TextButton(
+                        child: const Text(
+                          '0.10',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        onPressed: () {
+                          newProductPrice += 0.10;
+                        },
+                      ),
+                    ),
+                    Expanded(
+                      child: TextButton(
+                        child: const Text(
+                          '0.20',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        onPressed: () {
+                          newProductPrice += 0.20;
+                        },
+                      ),
+                    ),
+                    Expanded(
+                      child: TextButton(
+                        child: const Text(
+                          '0.50',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        onPressed: () {
+                          newProductPrice += 0.50;
+                        },
+                      ),
+                    ),
+                    Expanded(
+                      child: TextButton(
+                        child: const Text(
+                          '1',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        onPressed: () {
+                          newProductPrice += 1;
+                        },
+                      ),
+                    ),
+                    Expanded(
+                      child: TextButton(
+                        child: const Text(
+                          '2',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        onPressed: () {
+                          newProductPrice += 2;
+                        },
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            /// cancel editing a product
+            TextButton(
+              child: const Text('CANCEL'),
+              onPressed: () {
+                /// re-set variables and close window
+                newProductTitle = '';
+                newProductPrice = 0.0;
+                Navigator.of(context).pop();
+              },
+            ),
+
+            /// save changes made to product
+            TextButton(
+              child: const Text('ADD'),
+              onPressed: () {
+                /// if the new product has a title and price
+                if (newProductTitle.isNotEmpty && newProductPrice != 0.0 ) {
+                  vMachine.addNewProduct(Product(title: newProductTitle, price: newProductPrice));
+                } else {
+                  /// an empty product cannot be added to vending machine
+                }
+                setState(() {});
+
+                /// close window
+                Navigator.of(context).pop();
+                /// re-set variables
+                newProductTitle = '';
+                newProductPrice = 0.0;
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   /// Widget to display a dialog for editing a product in vending machine
   Future<void> _editProductDialog(Product product) async {
     return showDialog<void>(
@@ -304,6 +449,9 @@ class _PageState extends State<Page> {
 
                               /// show the dialog for editing product
                               _editProductDialog(vMachine.products[index]);
+                              /// re-set variables for the newly added title and price
+                              newProductPrice = 0.0;
+                              newProductTitle = "";
                             },
                           ),
                         );
@@ -497,6 +645,7 @@ class _PageState extends State<Page> {
           : const Center(child: CircularProgressIndicator()),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          _addNewProductDialog();
           setState(() {});
         },
         child: const Icon(Icons.add),
