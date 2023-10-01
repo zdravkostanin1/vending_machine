@@ -3,7 +3,7 @@
 Vending Machine Mobile Application
 
 ## Demo
-![Alt-text]((https://media.giphy.com/media/H0HYtgOVOJIA5g0vZc/giphy.gif))
+![Alt-text](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcnpiZG1idTBvcG5rOTgzZjBlZWkxbHE3OXQ5YnZmNWVhaXloN25vdSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/H0HYtgOVOJIA5g0vZc/giphy.gif)
 
 ## Getting Started with the app
 
