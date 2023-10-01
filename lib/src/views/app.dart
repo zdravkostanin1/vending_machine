@@ -257,19 +257,29 @@ class _PageState extends State<Page> {
                             ),
                             // TODO: Display each product's LEFTOVER inventory on the leading:
                             // TODO: When user makes a purchase --> one ITEM goes OFF the INVENTORY
-                            // leading: ,
+                            leading: Text(
+                              '${vMachine.products[index].inventory}',
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 15.0,
+                              ),
+                            ),
                             onTap: () {
                               /// assign the selected item's name and price to local variables
-                              selectedProductName = vMachine.products[index].title;
-                              selectedProductPrice = vMachine.products[index].price;
+                              selectedProductName =
+                                  vMachine.products[index].title;
+                              selectedProductPrice =
+                                  vMachine.products[index].price;
 
                               /// calculate the change
                               if (vMachine.totalCoins != 0.0) {
                                 /// re-set the change
                                 vMachine.changeCoins = {};
                                 vMachine.change = 0.0;
+
                                 /// calculate the new change
                                 vMachine.calculateChange(
+                                  vMachine.products[index],
                                   selectedProductPrice,
                                   vMachine.totalCoins,
                                 );
@@ -277,12 +287,14 @@ class _PageState extends State<Page> {
 
                               /// if no money were inserted --> display a toast message that says no money inserted
                               else {
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
                               }
                               vMachine.totalCoins = 0.0;
                               setState(() {});
                             },
-                            // TODO: implement --> updating of a product
+
+                            /// update the product you select by long-pressing it
                             onLongPress: () {
                               /// assign the selected item's name and price to local variables
                               selectedProductName =
@@ -322,6 +334,7 @@ class _PageState extends State<Page> {
                             onPressed: () {
                               /// sums up to the coins
                               vMachine.insertCoin(double.parse('0.10'));
+
                               /// re-set the change
                               vMachine.changeCoins = {};
                               vMachine.change = 0.0;
@@ -339,6 +352,7 @@ class _PageState extends State<Page> {
                             onPressed: () {
                               /// sums up to the coins
                               vMachine.insertCoin(double.parse('0.20'));
+
                               /// re-set the change
                               vMachine.changeCoins = {};
                               vMachine.change = 0.0;
@@ -356,6 +370,7 @@ class _PageState extends State<Page> {
                             onPressed: () {
                               /// sums up to the coins
                               vMachine.insertCoin(double.parse('0.50'));
+
                               /// re-set the change
                               vMachine.changeCoins = {};
                               vMachine.change = 0.0;
@@ -373,6 +388,7 @@ class _PageState extends State<Page> {
                             onPressed: () {
                               /// sums up to the coins
                               vMachine.insertCoin(double.parse('1.0'));
+
                               /// re-set the change
                               vMachine.changeCoins = {};
                               vMachine.change = 0.0;
@@ -392,6 +408,7 @@ class _PageState extends State<Page> {
                             onPressed: () {
                               /// sums up to the coins
                               vMachine.insertCoin(double.parse('2.0'));
+
                               /// re-set the change
                               vMachine.changeCoins = {};
                               vMachine.change = 0.0;
@@ -456,6 +473,7 @@ class _PageState extends State<Page> {
                             /// re-set coins, name and price of product last chosen
                             selectedProductName = "";
                             selectedProductPrice = 0.0;
+
                             /// re-set total coins, change and map of change coins
                             vMachine.totalCoins = 0.0;
                             vMachine.change = 0.0;

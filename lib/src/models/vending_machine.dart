@@ -60,35 +60,49 @@ class VendingMachine {
   void deleteProduct(int index) => products.removeAt(index);
 
   /// method accepts the name of the product that has been clicked & price
-  void calculateChange(double price, double moneyInserted) {
-    if (moneyInserted != 0.0) {
-      if (moneyInserted == price) {
-        /// there is no change...
-      }
+  void calculateChange(Product product, double price, double moneyInserted) {
+    if (product.inventory != 0) {
+      if (moneyInserted != 0.0) {
+        /// there is no change
+        if (moneyInserted == price) {
+          /// remove one from the inventory of the selected product
+          product.inventory--;
+        }
 
-      /// coins are more than products price --> return change
-      else if (moneyInserted > price) {
-        /// calculate the change
-        change = moneyInserted - price;
-        /// calculate the precise change
-        preciseChange = moneyInserted - price;
-        for (var coin in coinDenominations) {
-          if (preciseChange >= coin) {
-            /// a variable which counts each coin's COUNT (e.g. how much times this coin has been used)
-            int count = (preciseChange / coin).floor();
-            /// add that coin to a map
-            changeCoins[coin] = count;
-            /// get the precise Decimal of subtracting the doubles
-            var preciseDecimalResult = (Decimal.parse(preciseChange.toString()) - Decimal.parse((coin * count).toString()));
-            preciseChange = double.parse(preciseDecimalResult.toString());
+        /// coins are more than products price --> return change
+        else if (moneyInserted > price) {
+          /// calculate the change
+          change = moneyInserted - price;
+
+          /// calculate the precise change
+          preciseChange = moneyInserted - price;
+          for (var coin in coinDenominations) {
+            if (preciseChange >= coin) {
+              /// a variable which counts each coin's COUNT (e.g. how much times this coin has been used)
+              int count = (preciseChange / coin).floor();
+
+              /// add that coin to a map
+              changeCoins[coin] = count;
+
+              /// get the precise Decimal of subtracting the doubles
+              var preciseDecimalResult = (Decimal.parse(
+                  preciseChange.toString()) -
+                  Decimal.parse((coin * count).toString()));
+              preciseChange = double.parse(preciseDecimalResult.toString());
+            }
           }
+
+          /// remove one from the inventory of the selected product
+          product.inventory--;
+        }
+
+        /// not enough COINS inserted
+        else {
+          // TODO: Maybe display SnackBar --> not enough coins
         }
       }
-
-      /// not enough COINS inserted
-      else {
-        // TODO: Maybe display SnackBar --> not enough coins
-      }
+    } else {
+      // NO INVENTORY...
     }
   }
 }
