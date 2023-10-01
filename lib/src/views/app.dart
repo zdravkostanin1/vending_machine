@@ -69,7 +69,12 @@ class _PageState extends State<Page> {
       barrierDismissible: true,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('EDIT THIS PRODUCT', style: TextStyle(fontWeight: FontWeight.bold,),),
+          title: const Text(
+            'EDIT THIS PRODUCT',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -77,35 +82,29 @@ class _PageState extends State<Page> {
                   textAlign: TextAlign.start,
                   decoration: InputDecoration(
                       labelText: 'Input new product name',
-                      labelStyle: const TextStyle(fontWeight: FontWeight.w400, color: Colors.black),
+                      labelStyle: const TextStyle(
+                          fontWeight: FontWeight.w400, color: Colors.black),
                       border: const OutlineInputBorder(),
                       hintText: selectedProductName,
                       // helperText: 'New product name',
-                      hintStyle: const TextStyle(fontWeight: FontWeight.w400, color: Colors.black)
-                  ),
+                      hintStyle: const TextStyle(
+                          fontWeight: FontWeight.w400, color: Colors.black)),
                   // TODO: Implement
                   onChanged: (String newProductName) {},
                 ),
-                const SizedBox(height: 10.0,),
-                // TextField(
-                //   textAlign: TextAlign.start,
-                //   keyboardType: TextInputType.number,
-                //   decoration: InputDecoration(
-                //       labelText: 'Input new product price',
-                //       border: const OutlineInputBorder(),
-                //       hintText: selectedProductPrice.toStringAsFixed(2),
-                //       // helperText: 'New product name',
-                //       hintStyle: const TextStyle(fontWeight: FontWeight.w400, color: Colors.black)
-                //   ),
-                //   // TODO: Implement
-                //   onChanged: (String newProductName) {},
-                // ),
-                const Text('NEW PRICE: ', style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
-                const SizedBox(height: 20.0,),
+                const SizedBox(
+                  height: 10.0,
+                ),
+                const Text(
+                  'NEW PRICE: ',
+                  style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // TODO: Add 5 stotinki option
                     Expanded(
                       child: TextButton(
                         child: const Text(
@@ -126,7 +125,6 @@ class _PageState extends State<Page> {
                           style: TextStyle(color: Colors.black),
                         ),
                         onPressed: () {
-                          // TODO: Maybe compose a new method for newProductPrice input?
                           newProductPrice += 0.20;
                           // print(0.20.toStringAsFixed(2));
                         },
@@ -139,7 +137,6 @@ class _PageState extends State<Page> {
                           style: TextStyle(color: Colors.black),
                         ),
                         onPressed: () {
-                          // TODO: Maybe compose a new method for newProductPrice input?
                           newProductPrice += 0.50;
                           // vMachine.insertCoin(double.parse('0.50'));
                           // print(0.50.toStringAsFixed(2));
@@ -153,7 +150,6 @@ class _PageState extends State<Page> {
                           style: TextStyle(color: Colors.black),
                         ),
                         onPressed: () {
-                          // TODO: Maybe compose a new method for newProductPrice input?
                           newProductPrice += 1;
                           // print(1.toStringAsFixed(2));
                         },
@@ -161,16 +157,15 @@ class _PageState extends State<Page> {
                     ),
                     Expanded(
                         child: TextButton(
-                          child: const Text(
-                            '2',
-                            style: TextStyle(color: Colors.black),
-                          ),
-                          onPressed: () {
-                            // TODO: Maybe compose a new method for newProductPrice input?
-                            newProductPrice += 2;
-                            // print(2.toStringAsFixed(2));
-                          },
-                        )),
+                      child: const Text(
+                        '2',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      onPressed: () {
+                        newProductPrice += 2;
+                        // print(2.toStringAsFixed(2));
+                      },
+                    )),
                   ],
                 )
               ],
@@ -229,7 +224,11 @@ class _PageState extends State<Page> {
                                 vMachine.deleteProduct(index);
                                 setState(() {});
                               },
-                              icon: const Icon(Icons.delete, color: Color(0xff3D0C11), size: 30.0,),
+                              icon: const Icon(
+                                Icons.delete,
+                                color: Color(0xff3D0C11),
+                                size: 30.0,
+                              ),
                             ),
                             title: Text(
                               vMachine.products[index].title,
@@ -245,13 +244,16 @@ class _PageState extends State<Page> {
                                 fontSize: 15.0,
                               ),
                             ),
-                            // TODO: Display each product's LEFTOVER inventory
+                            // TODO: Display each product's LEFTOVER inventory on the leading:
                             // TODO: When user makes a purchase --> one ITEM goes OFF the INVENTORY
-                            // subtitle: const Text('INVENTORY: 15'),
+                            // leading: ,
                             onTap: () {
                               /// assign the selected item's name and price to local variables
-                              selectedProductName = vMachine.products[index].title;
-                              selectedProductPrice = vMachine.products[index].price;
+                              selectedProductName =
+                                  vMachine.products[index].title;
+                              selectedProductPrice =
+                                  vMachine.products[index].price;
+
                               /// calculate the change
                               vMachine.calculateChange(
                                 selectedProductName,
@@ -264,8 +266,11 @@ class _PageState extends State<Page> {
                             // TODO: implement --> updating of a product
                             onLongPress: () {
                               /// assign the selected item's name and price to local variables
-                              selectedProductName = vMachine.products[index].title;
-                              selectedProductPrice = vMachine.products[index].price;
+                              selectedProductName =
+                                  vMachine.products[index].title;
+                              selectedProductPrice =
+                                  vMachine.products[index].price;
+
                               /// show the dialog for editing product
                               _editProductDialog();
                             },
@@ -281,13 +286,14 @@ class _PageState extends State<Page> {
                     const Text(
                       'FIRSTLY, INSERT COINS IN BULGARIAN LEV',
                       style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 20.0),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0,
+                      ),
                     ),
                     const SizedBox(height: 20.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // TODO: Add 5 stotinki option
                         Expanded(
                           child: TextButton(
                             child: const Text(
@@ -296,6 +302,7 @@ class _PageState extends State<Page> {
                             ),
                             onPressed: () {
                               vMachine.insertCoin(double.parse('0.10'));
+                              setState(() {});
                               // print(0.10.toStringAsFixed(2));
                             },
                           ),
@@ -308,6 +315,7 @@ class _PageState extends State<Page> {
                             ),
                             onPressed: () {
                               vMachine.insertCoin(double.parse('0.20'));
+                              setState(() {});
                               // print(0.20.toStringAsFixed(2));
                             },
                           ),
@@ -320,6 +328,7 @@ class _PageState extends State<Page> {
                             ),
                             onPressed: () {
                               vMachine.insertCoin(double.parse('0.50'));
+                              setState(() {});
                               // print(0.50.toStringAsFixed(2));
                             },
                           ),
@@ -332,57 +341,50 @@ class _PageState extends State<Page> {
                             ),
                             onPressed: () {
                               vMachine.insertCoin(double.parse('1.0'));
+                              setState(() {});
                               // print(1.toStringAsFixed(2));
                             },
                           ),
                         ),
                         Expanded(
-                            child: TextButton(
-                          child: const Text(
-                            '2 lv',
-                            style: TextStyle(color: Colors.black),
+                          child: TextButton(
+                            child: const Text(
+                              '2 lv',
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                            onPressed: () {
+                              vMachine.insertCoin(double.parse('2.0'));
+                              setState(() {});
+                              // print(2.toStringAsFixed(2));
+                            },
                           ),
-                          onPressed: () {
-                            vMachine.insertCoin(double.parse('2.0'));
-                            // print(2.toStringAsFixed(2));
-                          },
-                        )),
+                        ),
                       ],
                     ),
-                    // Padding(
-                    //   padding: const EdgeInsets.all(15.0),
-                    //   child: TextField(
-                    //     controller: coinsController,
-                    //     decoration: const InputDecoration(
-                    //       labelText: 'Input Coins (BGN)',
-                    //       prefixIcon: Icon(Icons.numbers),
-                    //       border: OutlineInputBorder(),
-                    //     ),
-                    //     keyboardType: TextInputType.number,
-                    //     onSubmitted: (String s) {
-                    //       /// parse the string value when input is submitted --> aka coins were inserted
-                    //       /// input must not be empty.
-                    //       if (s.isEmpty) {
-                    //         /// display snack bar message that NO COINS were inserted
-                    //         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    //       } else {
-                    //         coins = double.parse(s);
-                    //       }
-                    //
-                    //       /// calculate the change --> if there's any change
-                    //       // TODO: Only be able to make a purchase if there's INVENTORY...
-                    //       vMachine.calculateChange(selectedProductName, selectedProductPrice, coins);
-                    //
-                    //       /// clear the inputted coins
-                    //       coinsController.clear();
-                    //
-                    //       /// re-set coins, because the vending machine GIVES us the change
-                    //       coins = 0.0;
-                    //       setState(() {});
-                    //     },
-                    //   ),
-                    // ),
-                    // TODO: Maybe DISPLAY change only if there's CHANGE?
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+
+                    /// display the coins that are inserted currently
+                    RichText(
+                      text: TextSpan(
+                        text: "COINS INSERTED: ",
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 18.0,
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: vMachine.totalCoins != 0.0
+                                ? vMachine.totalCoins.toStringAsFixed(2)
+                                : "",
+                            style: const TextStyle(color: Colors.deepPurple),
+                          ),
+                        ],
+                      ),
+                    ),
                     const SizedBox(
                       height: 20.0,
                     ),
@@ -425,26 +427,6 @@ class _PageState extends State<Page> {
                         ),
                       ),
                     ),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   children: [
-                    //     Expanded(
-                    //         child: TextButton(child: const Text('0.10', style: TextStyle(color: Colors.black)), onPressed: () {},)
-                    //     ),
-                    //     Expanded(
-                    //         child: TextButton(child: const Text('0.20', style: TextStyle(color: Colors.black)), onPressed: () {},)
-                    //     ),
-                    //     Expanded(
-                    //         child: TextButton(child: const Text('0.50', style: TextStyle(color: Colors.black)), onPressed: () {},)
-                    //     ),
-                    //     Expanded(
-                    //         child: TextButton(child: const Text('1', style: TextStyle(color: Colors.black)), onPressed: () {},)
-                    //     ),
-                    //     Expanded(
-                    //         child: TextButton(child: const Text('2', style: TextStyle(color: Colors.black)), onPressed: () {},)
-                    //     ),
-                    //   ],
-                    // ),
                   ],
                 ),
               ),
@@ -454,9 +436,6 @@ class _PageState extends State<Page> {
         onPressed: () {
           setState(() {});
         },
-        // foregroundColor: Co
-        // backgroundColor: customizations[index].$2,
-        // shape: customizations[index].$3,
         child: const Icon(Icons.add),
       ),
     );

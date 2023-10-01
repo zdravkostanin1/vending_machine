@@ -9,6 +9,7 @@ List<double> coinDenominations = [2, 1, 0.5, 0.2, 0.1];
 /// to store the used coins for returning a change
 List<double> usedCoins = [];
 
+/// to store the coins Change
 Map<double, int> changeCoins = {};
 
 class VendingMachine {
@@ -48,23 +49,17 @@ class VendingMachine {
   void insertCoin(double coin) => totalCoins += coin;
 
   /// to edit a product's price
-  void editProductPrice(int index, double newPrice) =>
-      products[index].price = newPrice;
+  void editProductPrice(int index, double newPrice) => products[index].price = newPrice;
 
   /// to edit a product's title
-  void editProductTitle(int index, String newTitle) =>
-      products[index].title = newTitle;
+  void editProductTitle(int index, String newTitle) => products[index].title = newTitle;
 
-  // TODO: Implement CRUD - Read operation
-  void getProductData(Product product) {
-    print(product.title);
-    print(product.price);
-  }
+  /// returns product at index of choice
+  Product getProductData(int index) => products[index];
 
   /// this method is used to delete a product from the vending machine
   void deleteProduct(int index) => products.removeAt(index);
 
-  // TODO: Implement
   /// method accepts the name of the product that has been clicked & price
   void calculateChange(String product, double price, double coinsInserted) {
     if (coinsInserted != 0.0) {
@@ -75,20 +70,19 @@ class VendingMachine {
       /// coins are more than products price --> return change
       else if (coinsInserted > price) {
         /// calculate the change
-        change = coinsInserted - price;
-        // usedCoins
-        for (double coin in coinDenominations) {
-          if (change >= coin) {
-            int count = (change / coin).floor();
+        double preciseChange = coinsInserted - price;
+        for (var coin in coinDenominations) {
+          if (preciseChange >= coin) {
+            /// a variable which counts each coin's COUNT (e.g. how much times this coin has been used)
+            int count = (preciseChange / coin).floor();
+            /// add that coin to a map
             changeCoins[coin] = count;
-            // changeCoins['count']?.add(count);
-            // changeCoins['denomination']?.add(coin);
-            // print(change - coin * count);
-            change -= coin * count;
-            // print(coin);
+            /// get the precise Decimal of subtracting the doubles
+            var preciseDecimalResult = (Decimal.parse(preciseChange.toString()) - Decimal.parse((coin * count).toString()));
+            preciseChange = double.parse(preciseDecimalResult.toString());
           }
         }
-        print(changeCoins);
+        // print(changeCoins);
       }
 
       /// not enough COINS inserted
