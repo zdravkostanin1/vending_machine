@@ -3,7 +3,7 @@
 Vending Machine Mobile Application
 
 ## Demo
-![Alt-text](https://giphy.com/gifs/coding-flutter-mobile-application-H0HYtgOVOJIA5g0vZc.gif)
+![Alt-text]((https://media.giphy.com/media/H0HYtgOVOJIA5g0vZc/giphy.gif))
 
 ## Getting Started with the app
 
