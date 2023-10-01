@@ -2,6 +2,9 @@
 
 Vending Machine Mobile Application
 
+## Demo
+![Alt Text]([https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif](https://giphy.com/gifs/coding-flutter-mobile-application-H0HYtgOVOJIA5g0vZc))
+
 ## Getting Started with the app
 
 - Install Android Studio
