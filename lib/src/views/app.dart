@@ -364,6 +364,7 @@ class _PageState extends State<Page> {
                 child: Column(
                   children: <Widget>[
                     ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
                       itemCount: vMachine.products.length,
