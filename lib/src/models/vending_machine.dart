@@ -3,15 +3,6 @@ import 'package:decimal/decimal.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:vending_machine_task/src/models/product.dart';
 
-/// to store our coinDenominations
-List<double> coinDenominations = [2, 1, 0.5, 0.2, 0.1];
-
-/// to store the used coins for returning a change
-List<double> usedCoins = [];
-
-/// to store the coins Change
-Map<double, int> changeCoins = {};
-
 class VendingMachine {
   /// counts the total coins inserted into machine
   double totalCoins = 0.0;
@@ -22,8 +13,20 @@ class VendingMachine {
   /// used to store the inventory of a SINGLE product
   final int productInventory = 15;
 
-  /// used to store our change
+  /// used to store our change (SUM)
   double change = 0.0;
+
+  /// used for iterations in loops & to store preciseChange
+  double preciseChange = 0.0;
+
+  /// to store our coinDenominations
+  List<double> coinDenominations = [2, 1, 0.5, 0.2, 0.1];
+
+  /// to store the used coins for returning a change
+  List<double> usedCoins = [];
+
+  /// to store the coins Change
+  Map<double, int> changeCoins = {};
 
   /// used to get products from firebase database
   getProducts() async {
@@ -70,7 +73,9 @@ class VendingMachine {
       /// coins are more than products price --> return change
       else if (coinsInserted > price) {
         /// calculate the change
-        double preciseChange = coinsInserted - price;
+        change = coinsInserted - price;
+        /// calculate the precise change
+        preciseChange = coinsInserted - price;
         for (var coin in coinDenominations) {
           if (preciseChange >= coin) {
             /// a variable which counts each coin's COUNT (e.g. how much times this coin has been used)
@@ -82,7 +87,6 @@ class VendingMachine {
             preciseChange = double.parse(preciseDecimalResult.toString());
           }
         }
-        // print(changeCoins);
       }
 
       /// not enough COINS inserted

@@ -21,6 +21,7 @@ Vending Machine Mobile Application
 ## Information (must know):
 
 - Currency used in App - BGN
+- Coin Denominations [2, 1, 0.5, 0.2, 0.1]
 
 ## Instructions (how to use the app)
 - Long press a product to edit it's title and price

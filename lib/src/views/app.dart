@@ -260,6 +260,7 @@ class _PageState extends State<Page> {
                                 selectedProductPrice,
                                 vMachine.totalCoins,
                               );
+                              setState(() {});
                               // vMachine.returnCoin(totalCoins, selectedProductPrice);
                               // selectedProductInventory = vMachine.products[index].inventory;
                             },
@@ -398,7 +399,8 @@ class _PageState extends State<Page> {
                         children: <TextSpan>[
                           TextSpan(
                             text: vMachine.change != 0.0
-                                ? vMachine.change.toStringAsFixed(2)
+                            /// displaying the total change --> and the coins that make up the total change
+                                ? '${vMachine.change.toStringAsFixed(2)} - ${vMachine.changeCoins}'
                                 : "",
                             style: const TextStyle(color: Colors.red),
                           ),
