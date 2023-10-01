@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:vending_machine_task/src/models/vending_machine.dart';
 
+import '../models/product.dart';
+
 /// make a vending machine obj
 VendingMachine vMachine = VendingMachine();
 
@@ -63,7 +65,7 @@ class _PageState extends State<Page> {
   }
 
   /// Widget to display a dialog for editing a product in vending machine
-  Future<void> _editProductDialog() async {
+  Future<void> _editProductDialog(Product product) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: true,
@@ -90,7 +92,9 @@ class _PageState extends State<Page> {
                       hintStyle: const TextStyle(
                           fontWeight: FontWeight.w400, color: Colors.black)),
                   // TODO: Implement
-                  onChanged: (String newProductName) {},
+                  onChanged: (String newProductName) {
+                    newProductTitle = newProductName;
+                  },
                 ),
                 const SizedBox(
                   height: 10.0,
@@ -172,18 +176,30 @@ class _PageState extends State<Page> {
             ),
           ),
           actions: <Widget>[
+            /// cancel editing a product
             TextButton(
               child: const Text('CANCEL'),
               onPressed: () {
-                // TODO: Implement
+                /// re-set variables and close window
+                newProductTitle = '';
+                newProductPrice = 0.0;
                 Navigator.of(context).pop();
               },
             ),
+            /// save changes made to product
             TextButton(
               child: const Text('SAVE'),
               onPressed: () {
-                // TODO: Implement
-
+                /// if the new name is not empty --> update to the new product name
+                if (newProductTitle.isNotEmpty) {
+                  product.title = newProductTitle;
+                }
+                /// if the new price is not empty --> update to the new product price
+                if (newProductPrice != 0.0) {
+                  product.price = newProductPrice;
+                }
+                setState(() {});
+                /// close window
                 Navigator.of(context).pop();
               },
             ),
@@ -272,7 +288,7 @@ class _PageState extends State<Page> {
                               selectedProductPrice = vMachine.products[index].price;
 
                               /// show the dialog for editing product
-                              _editProductDialog();
+                              _editProductDialog(vMachine.products[index]);
                             },
                           ),
                         );
