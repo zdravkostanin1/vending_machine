@@ -249,28 +249,27 @@ class _PageState extends State<Page> {
                             // leading: ,
                             onTap: () {
                               /// assign the selected item's name and price to local variables
-                              selectedProductName =
-                                  vMachine.products[index].title;
-                              selectedProductPrice =
-                                  vMachine.products[index].price;
+                              selectedProductName = vMachine.products[index].title;
+                              selectedProductPrice = vMachine.products[index].price;
 
                               /// calculate the change
-                              vMachine.calculateChange(
-                                selectedProductName,
-                                selectedProductPrice,
-                                vMachine.totalCoins,
-                              );
+                              if (vMachine.totalCoins != 0.0) {
+                                vMachine.calculateChange(
+                                  selectedProductPrice,
+                                  vMachine.totalCoins,
+                                );
+                              }
+                              /// if no money were inserted --> display a toast message that says no coins inputted
+                              else {
+                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              }
                               setState(() {});
-                              // vMachine.returnCoin(totalCoins, selectedProductPrice);
-                              // selectedProductInventory = vMachine.products[index].inventory;
                             },
                             // TODO: implement --> updating of a product
                             onLongPress: () {
                               /// assign the selected item's name and price to local variables
-                              selectedProductName =
-                                  vMachine.products[index].title;
-                              selectedProductPrice =
-                                  vMachine.products[index].price;
+                              selectedProductName = vMachine.products[index].title;
+                              selectedProductPrice = vMachine.products[index].price;
 
                               /// show the dialog for editing product
                               _editProductDialog();

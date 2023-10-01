@@ -64,18 +64,18 @@ class VendingMachine {
   void deleteProduct(int index) => products.removeAt(index);
 
   /// method accepts the name of the product that has been clicked & price
-  void calculateChange(String product, double price, double coinsInserted) {
-    if (coinsInserted != 0.0) {
-      if (coinsInserted == price) {
+  void calculateChange(double price, double moneyInserted) {
+    if (moneyInserted != 0.0) {
+      if (moneyInserted == price) {
         /// there is no change...
       }
 
       /// coins are more than products price --> return change
-      else if (coinsInserted > price) {
+      else if (moneyInserted > price) {
         /// calculate the change
-        change = coinsInserted - price;
+        change = moneyInserted - price;
         /// calculate the precise change
-        preciseChange = coinsInserted - price;
+        preciseChange = moneyInserted - price;
         for (var coin in coinDenominations) {
           if (preciseChange >= coin) {
             /// a variable which counts each coin's COUNT (e.g. how much times this coin has been used)
