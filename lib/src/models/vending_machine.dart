@@ -52,10 +52,10 @@ class VendingMachine {
   void insertCoin(double coin) => totalCoins += coin;
 
   /// to edit a product's price
-  void editProductPrice(int index, double newPrice) => products[index].price = newPrice;
+  void editProductPrice(Product product, double newPrice) => product.price = newPrice;
 
   /// to edit a product's title
-  void editProductTitle(int index, String newTitle) => products[index].title = newTitle;
+  void editProductTitle(Product product, String newTitle) => product.title = newTitle;
 
   /// returns product at index of choice
   Product getProductData(int index) => products[index];

@@ -42,9 +42,11 @@ class _PageState extends State<Page> {
 
   // int selectedProductInventory = 0;
   double coins = 0.0;
+
+  /// to display that no money were inserted
   var snackBar = const SnackBar(
     content: Text(
-      'No coins inserted',
+      'No money inserted',
       style: TextStyle(
         color: Colors.black,
       ),
@@ -192,11 +194,11 @@ class _PageState extends State<Page> {
               onPressed: () {
                 /// if the new name is not empty --> update to the new product name
                 if (newProductTitle.isNotEmpty) {
-                  product.title = newProductTitle;
+                  vMachine.editProductTitle(product, newProductTitle);
                 }
                 /// if the new price is not empty --> update to the new product price
                 if (newProductPrice != 0.0) {
-                  product.price = newProductPrice;
+                  vMachine.editProductPrice(product, newProductPrice);
                 }
                 setState(() {});
                 /// close window
@@ -275,7 +277,7 @@ class _PageState extends State<Page> {
                                   vMachine.totalCoins,
                                 );
                               }
-                              /// if no money were inserted --> display a toast message that says no coins inputted
+                              /// if no money were inserted --> display a toast message that says no money inserted
                               else {
                                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
                               }
