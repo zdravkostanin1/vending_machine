@@ -100,9 +100,7 @@ class VendingMachine {
         }
 
         /// not enough COINS inserted
-        else {
-          // TODO: Maybe display SnackBar --> not enough coins
-        }
+        else {}
       }
     } else {
       // NO INVENTORY...

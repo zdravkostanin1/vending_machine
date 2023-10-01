@@ -51,7 +51,6 @@ class _PageState extends State<Page> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     /// get the products
@@ -401,8 +400,6 @@ class _PageState extends State<Page> {
                                 fontSize: 15.0,
                               ),
                             ),
-                            // TODO: Display each product's LEFTOVER inventory on the leading:
-                            // TODO: When user makes a purchase --> one ITEM goes OFF the INVENTORY
                             leading: Text(
                               '${vMachine.products[index].inventory}',
                               style: const TextStyle(
