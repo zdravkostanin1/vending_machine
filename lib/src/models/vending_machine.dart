@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:decimal/decimal.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:vending_machine_task/src/models/product.dart';
@@ -21,9 +20,6 @@ class VendingMachine {
 
   /// to store our coinDenominations
   List<double> coinDenominations = [2, 1, 0.5, 0.2, 0.1];
-
-  /// to store the used coins for returning a change
-  List<double> usedCoins = [];
 
   /// to store the coins Change
   Map<double, int> changeCoins = {};
@@ -91,10 +87,8 @@ class VendingMachine {
 
       /// not enough COINS inserted
       else {
-        // TODO: Maybe include how much coins MORE the user needs to input
+        // TODO: Maybe display SnackBar --> not enough coins
       }
-    } else {
-      print("NO COINS");
     }
   }
 }

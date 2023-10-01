@@ -32,16 +32,12 @@ class Page extends StatefulWidget {
 }
 
 class _PageState extends State<Page> {
-  TextEditingController coinsController = TextEditingController();
   String selectedProductName = "";
   double selectedProductPrice = 0.0;
 
   /// used to store the edited product's title and price
   String newProductTitle = "";
   double newProductPrice = 0.0;
-
-  // int selectedProductInventory = 0;
-  double coins = 0.0;
 
   /// to display that no money were inserted
   var snackBar = const SnackBar(
@@ -93,8 +89,8 @@ class _PageState extends State<Page> {
                       // helperText: 'New product name',
                       hintStyle: const TextStyle(
                           fontWeight: FontWeight.w400, color: Colors.black)),
-                  // TODO: Implement
                   onChanged: (String newProductName) {
+                    /// save the newly inputted product name
                     newProductTitle = newProductName;
                   },
                 ),
@@ -118,9 +114,7 @@ class _PageState extends State<Page> {
                           style: TextStyle(color: Colors.black),
                         ),
                         onPressed: () {
-                          // TODO: Maybe compose a new method for newProductPrice inside VendingMachine class input?
                           newProductPrice += 0.10;
-                          // print(0.10.toStringAsFixed(2));
                         },
                       ),
                     ),
@@ -132,7 +126,6 @@ class _PageState extends State<Page> {
                         ),
                         onPressed: () {
                           newProductPrice += 0.20;
-                          // print(0.20.toStringAsFixed(2));
                         },
                       ),
                     ),
@@ -144,8 +137,6 @@ class _PageState extends State<Page> {
                         ),
                         onPressed: () {
                           newProductPrice += 0.50;
-                          // vMachine.insertCoin(double.parse('0.50'));
-                          // print(0.50.toStringAsFixed(2));
                         },
                       ),
                     ),
@@ -157,21 +148,20 @@ class _PageState extends State<Page> {
                         ),
                         onPressed: () {
                           newProductPrice += 1;
-                          // print(1.toStringAsFixed(2));
                         },
                       ),
                     ),
                     Expanded(
-                        child: TextButton(
-                      child: const Text(
-                        '2',
-                        style: TextStyle(color: Colors.black),
+                      child: TextButton(
+                        child: const Text(
+                          '2',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        onPressed: () {
+                          newProductPrice += 2;
+                        },
                       ),
-                      onPressed: () {
-                        newProductPrice += 2;
-                        // print(2.toStringAsFixed(2));
-                      },
-                    )),
+                    ),
                   ],
                 )
               ],
@@ -188,6 +178,7 @@ class _PageState extends State<Page> {
                 Navigator.of(context).pop();
               },
             ),
+
             /// save changes made to product
             TextButton(
               child: const Text('SAVE'),
@@ -196,11 +187,13 @@ class _PageState extends State<Page> {
                 if (newProductTitle.isNotEmpty) {
                   vMachine.editProductTitle(product, newProductTitle);
                 }
+
                 /// if the new price is not empty --> update to the new product price
                 if (newProductPrice != 0.0) {
                   vMachine.editProductPrice(product, newProductPrice);
                 }
                 setState(() {});
+
                 /// close window
                 Navigator.of(context).pop();
               },
@@ -272,22 +265,30 @@ class _PageState extends State<Page> {
 
                               /// calculate the change
                               if (vMachine.totalCoins != 0.0) {
+                                /// re-set the change
+                                vMachine.changeCoins = {};
+                                vMachine.change = 0.0;
+                                /// calculate the new change
                                 vMachine.calculateChange(
                                   selectedProductPrice,
                                   vMachine.totalCoins,
                                 );
                               }
+
                               /// if no money were inserted --> display a toast message that says no money inserted
                               else {
                                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
                               }
+                              vMachine.totalCoins = 0.0;
                               setState(() {});
                             },
                             // TODO: implement --> updating of a product
                             onLongPress: () {
                               /// assign the selected item's name and price to local variables
-                              selectedProductName = vMachine.products[index].title;
-                              selectedProductPrice = vMachine.products[index].price;
+                              selectedProductName =
+                                  vMachine.products[index].title;
+                              selectedProductPrice =
+                                  vMachine.products[index].price;
 
                               /// show the dialog for editing product
                               _editProductDialog(vMachine.products[index]);
@@ -319,7 +320,11 @@ class _PageState extends State<Page> {
                               style: TextStyle(color: Colors.black),
                             ),
                             onPressed: () {
+                              /// sums up to the coins
                               vMachine.insertCoin(double.parse('0.10'));
+                              /// re-set the change
+                              vMachine.changeCoins = {};
+                              vMachine.change = 0.0;
                               setState(() {});
                               // print(0.10.toStringAsFixed(2));
                             },
@@ -332,7 +337,11 @@ class _PageState extends State<Page> {
                               style: TextStyle(color: Colors.black),
                             ),
                             onPressed: () {
+                              /// sums up to the coins
                               vMachine.insertCoin(double.parse('0.20'));
+                              /// re-set the change
+                              vMachine.changeCoins = {};
+                              vMachine.change = 0.0;
                               setState(() {});
                               // print(0.20.toStringAsFixed(2));
                             },
@@ -345,7 +354,11 @@ class _PageState extends State<Page> {
                               style: TextStyle(color: Colors.black),
                             ),
                             onPressed: () {
+                              /// sums up to the coins
                               vMachine.insertCoin(double.parse('0.50'));
+                              /// re-set the change
+                              vMachine.changeCoins = {};
+                              vMachine.change = 0.0;
                               setState(() {});
                               // print(0.50.toStringAsFixed(2));
                             },
@@ -358,7 +371,11 @@ class _PageState extends State<Page> {
                               style: TextStyle(color: Colors.black),
                             ),
                             onPressed: () {
+                              /// sums up to the coins
                               vMachine.insertCoin(double.parse('1.0'));
+                              /// re-set the change
+                              vMachine.changeCoins = {};
+                              vMachine.change = 0.0;
                               setState(() {});
                               // print(1.toStringAsFixed(2));
                             },
@@ -373,7 +390,11 @@ class _PageState extends State<Page> {
                               ),
                             ),
                             onPressed: () {
+                              /// sums up to the coins
                               vMachine.insertCoin(double.parse('2.0'));
+                              /// re-set the change
+                              vMachine.changeCoins = {};
+                              vMachine.change = 0.0;
                               setState(() {});
                               // print(2.toStringAsFixed(2));
                             },
@@ -416,7 +437,8 @@ class _PageState extends State<Page> {
                         children: <TextSpan>[
                           TextSpan(
                             text: vMachine.change != 0.0
-                            /// displaying the total change --> and the coins that make up the total change
+
+                                /// displaying the total change --> and the coins that make up the total change
                                 ? '${vMachine.change.toStringAsFixed(2)} - ${vMachine.changeCoins}'
                                 : "",
                             style: const TextStyle(color: Colors.red),
@@ -429,13 +451,17 @@ class _PageState extends State<Page> {
                       child: TextButton(
                         /// resets the process of the vending machine
                         onPressed: () {
-                          /// clear the inputted coins
-                          coinsController.clear();
-
-                          /// re-set coins, name and price of product last chosen
-                          coins = 0.0;
-                          selectedProductName = "";
-                          selectedProductPrice = 0.0;
+                          /// you can only cancel --> if there's no returned change already.
+                          if (vMachine.change == 0.0) {
+                            /// re-set coins, name and price of product last chosen
+                            selectedProductName = "";
+                            selectedProductPrice = 0.0;
+                            /// re-set total coins, change and map of change coins
+                            vMachine.totalCoins = 0.0;
+                            vMachine.change = 0.0;
+                            vMachine.changeCoins = {};
+                            setState(() {});
+                          }
                         },
                         style: TextButton.styleFrom(
                           foregroundColor: Colors.white,
